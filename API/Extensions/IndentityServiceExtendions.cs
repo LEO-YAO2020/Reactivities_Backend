@@ -10,7 +10,7 @@ using Persistence;
 
 namespace API.Extensions
 {
-    public static class IndentityServiceExtendions
+    public static class IdentityServiceExtensions
     {
         public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration config)
         {
