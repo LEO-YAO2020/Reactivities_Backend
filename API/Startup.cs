@@ -6,8 +6,10 @@ using API.Extensions;
 using API.Middleware;
 using Application.Activities;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
@@ -45,6 +48,7 @@ namespace API
       {
         config.RegisterValidatorsFromAssemblyContaining<Create>();
       });
+      services.TryAddScoped<IUserAccessor, UserAccessor>();
       services.AddApplicationServices(_config);
       services.AddIdentityService(_config);
     }
