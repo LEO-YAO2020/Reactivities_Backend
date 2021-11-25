@@ -26,11 +26,13 @@ namespace API.Extensions
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy",
-                    policy => { policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("Http://localhost:3000"); });
+                    policy => { policy.AllowAnyMethod().AllowAnyHeader()
+                        .AllowCredentials().WithOrigins("Http://localhost:3000"); });
             });
             services.AddMediatR(typeof(Edit.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            services.AddSignalR();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
             return services;
         }
