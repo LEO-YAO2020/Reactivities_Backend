@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Activities;
 using Application.Core;
+using Application.Profile;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Details = Application.Activities.Details;
 
 namespace API.Controllers
 {
   public class ActivitiesController : BaseApiController
   {
     [HttpGet]
-    public async Task<IActionResult> GetActivities()
+    public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
     {
-      return HandleResult(await Mediator.Send(new List.Query()));
+      return HandlePageResult(await Mediator.Send(new List.Query{Params = param}));
     }
-    
+
     [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetActivity(Guid id)
@@ -51,5 +53,7 @@ namespace API.Controllers
     {
       return HandleResult(await Mediator.Send(new UpdateAttendence.Command {Id = id}));
     }
-  }
+
+
+   }
 }
